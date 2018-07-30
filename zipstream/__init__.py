@@ -243,7 +243,8 @@ class ZipFile(zipfile.ZipFile):
             mtime = time.localtime(st.st_mtime)
             date_time = mtime[0:6]
         else:
-            st, isdir, date_time = None, False, time.localtime()[0:6]
+            st, date_time = None, time.localtime()[0:6]
+            isdir = arcname[-1] == os.sep
         # Create ZipInfo instance to store file information
         if arcname is None:
             arcname = filename
