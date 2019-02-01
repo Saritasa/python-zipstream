@@ -257,7 +257,7 @@ class ZipFile(zipfile.ZipFile):
         if st:
             zinfo.external_attr = (st[0] & 0xFFFF) << 16      # Unix attributes
         else:
-            zinfo.external_attr = 0o600 << 16     # ?rw-------
+            zinfo.external_attr = 0o777 << 16  # ?drwxr-xr-x
         if compress_type is None:
             zinfo.compress_type = self.compression
         else:
@@ -284,6 +284,7 @@ class ZipFile(zipfile.ZipFile):
             # use `0` bits flag for folders - because of bug with opening
             # archives with folders ZipInfo on macOS (couldn't be decompressed)
             zinfo.flag_bits = 0
+            zinfo.external_attr |= 0x10  # MS-DOS directory flag
             self.filelist.append(zinfo)
             self.NameToInfo[zinfo.filename] = zinfo
             yield self.fp.write(zinfo.FileHeader(False))
