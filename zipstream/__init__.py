@@ -281,6 +281,9 @@ class ZipFile(zipfile.ZipFile):
             zinfo.file_size = 0
             zinfo.compress_size = 0
             zinfo.CRC = 0
+            # use `0` bits flag for folders - because of bug with opening
+            # archives with folders ZipInfo on macOS (couldn't be decompressed)
+            zinfo.flag_bits = 0
             self.filelist.append(zinfo)
             self.NameToInfo[zinfo.filename] = zinfo
             yield self.fp.write(zinfo.FileHeader(False))
