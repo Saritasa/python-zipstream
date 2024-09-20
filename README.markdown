@@ -1,3 +1,5 @@
+# Deprecated ⚠️
+Moved to: https://github.com/saritasa-nest/usummit-python-zipstream
 
 # python-zipstream
 
